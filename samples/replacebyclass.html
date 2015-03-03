@@ -7,8 +7,58 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 <head>
 	<meta charset="utf-8">
 	<title>Replace Textareas by Class Name &mdash; CKEditor Sample</title>
-	<script src="../ckeditor.js"></script>
-	<link rel="stylesheet" href="sample.css">
+	
+	<script src="../Scripts/jquery-1.4.1.js"></script>
+    <script src="../ckeditor.js"></script>
+	<link rel="stylesheet" href="sample.css" />
+    <script type="text/javascript">
+        var timerId = 0;
+        $(document).ready(function () {
+            CKEDITOR.on('instanceReady', function (e) {
+                LoadCkEditorDataToDiv();
+                //UpdateDivCkEditorContent();
+                UpdateDivCkEditorContentWithDelay();
+
+            });
+        });
+
+        //retrieve html from ckeditor, remove img tag and load to myDiv
+        function LoadCkEditorDataToDiv() {
+                var editor = CKEDITOR.instances["editor1"];
+                var htmldata = editor.document.getBody().getHtml();
+                var newHtmlData = RemoveImgElementFromHtml(htmldata);
+                $('#CkEditorData').html(newHtmlData);
+
+
+
+            }
+        
+        //Remove img 
+        function RemoveImgElementFromHtml(htmlData) {
+            htmlData =  $(htmlData).find("img").remove().end();
+            return htmlData;
+        }
+
+        //Update my div CkEditor content when CkEditor change event fire
+        function UpdateDivCkEditorContent() {
+            for (var i in CKEDITOR.instances) {
+                CKEDITOR.instances[i].on('change', function () {
+                    LoadCkEditorDataToDiv();
+                });
+            }
+        }
+
+        //Update new div CkEditor content when CkEditor change event fire
+        function UpdateDivCkEditorContentWithDelay() {
+                CKEDITOR.instances["editor1"].on('change', function () {
+                        clearTimeout(timerId);
+                        timerId = 0;
+                        timerId = setTimeout(function () { LoadCkEditorDataToDiv() }, 500);
+                });
+        }
+       
+    </script>
+    
 </head>
 <body>
 	<h1 class="samples">
@@ -41,8 +91,18 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 		</p>
 		<p>
 			<input type="submit" value="Submit">
+            <input id="btnSelectAll" type="button" value="Select All">
 		</p>
+       
 	</form>
+    <p>
+         <label for="CkEditorData" class="myHeaderClass">
+				 CK-Editor data as HTML without images:
+         </label>
+    </p>
+    <div id="CkEditorData">
+    
+    </div>
 	<div id="footer">
 		<hr>
 		<p>
