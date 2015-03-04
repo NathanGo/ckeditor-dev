@@ -14,7 +14,13 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
     <script type="text/javascript">
         var timerId = 0;
         $(document).ready(function () {
-            CKEDITOR.on('instanceReady', function (e) {
+        	 $('#btnSelectAll').click(function (e) {
+                	SelectAll();
+            	});
+	        $('#btnSelectSecondParagraph').click(function (e) {
+                	SelectSecondParagraph();
+            	});
+            	CKEDITOR.on('instanceReady', function (e) {
                 LoadCkEditorDataToDiv();
                 //UpdateDivCkEditorContent();
                 UpdateDivCkEditorContentWithDelay();
@@ -57,6 +63,24 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
                 });
         }
        
+       // Select All text inside CkEditor
+        function SelectAll() {
+            var editor = CKEDITOR.instances["editor1"];
+            var range = editor.createRange();
+            range.setStartAt(range.root, CKEDITOR.POSITION_AFTER_START);
+            range.setEndAt(range.root, CKEDITOR.POSITION_BEFORE_END);
+            editor.getSelection().selectRanges([range]);
+        }
+
+        // Select second paragraph inside CkEditor
+        function SelectSecondParagraph() {
+            var editor = CKEDITOR.instances["editor1"];
+            var childs = editor.document.getElementsByTag("p");
+            var paragraphElement =  childs.getItem(1);
+            var selection = editor.getSelection();
+            selection.selectElement(paragraphElement);
+            
+        }
     </script>
     
 </head>
@@ -91,7 +115,8 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 		</p>
 		<p>
 			<input type="submit" value="Submit">
-            <input id="btnSelectAll" type="button" value="Select All">
+             	        <input id="btnSelectAll" type="button" value="Select All">
+            		<input id="btnSelectSecondParagraph" type="button" value="Select Second Paragraph">
 		</p>
        
 	</form>
