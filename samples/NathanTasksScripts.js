@@ -6,8 +6,6 @@ var timerId = 0;
 
 $(document).ready(function () {
 
-    
-
     $('#btnSelectAll').click(function (e) {
         SelectAll();
     });
