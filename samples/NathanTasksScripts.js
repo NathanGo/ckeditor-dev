@@ -1,23 +1,33 @@
 
 //*************************************************************
-// CkEditor task Part
+// CkEditor task part
 //*************************************************************
+
+
 var timerId = 0;
 
 $(document).ready(function () {
 
-    $('#btnSelectAll').click(function (e) {
-        SelectAll();
-    });
-    $('#btnSelectSecondParagraph').click(function (e) {
-        SelectSecondParagraph();
-    });
-    CKEDITOR.on('instanceReady', function (e) {
-        LoadCkEditorDataToDiv();
-        //UpdateDivCkEditorContent();
-        UpdateDivCkEditorContentWithDelay();
+    if ($("#btnSelectAll").length) {
+        $('#btnSelectAll').click(function (e) {
+            SelectAll();
+        });
+    }
+    if ($("#btnSelectSecondParagraph").length) {
+        $('#btnSelectSecondParagraph').click(function (e) {
+            SelectSecondParagraph();
+        });
+    }
 
-    });
+    if ($('#editor1').length) {
+        CKEDITOR.on('instanceReady', function (e) {
+            LoadCkEditorDataToDiv();
+            //UpdateDivCkEditorContent();
+            UpdateDivCkEditorContentWithDelay();
+
+        });
+    }
+    
 });
 
 //retrieve html from ckeditor, remove img tag and load to myDiv
@@ -74,9 +84,8 @@ function SelectSecondParagraph() {
 
 }
 
-
 //*************************************************************
-// JavaScript objects task Part
+// JavaScript data manipulation task part
 //*************************************************************
 
 var x = {
@@ -97,22 +106,28 @@ var x = {
     }
 };
 
-
 $(document).ready(function () {
-    $('#btnFilterPermission').click(function (e) {
-        result = filterPermissions(x, "owner");
-        document.getElementById("task").innerHTML = JSON.stringify(result, null, 4);
 
-    });
-    $('#btnMap').click(function (e) {
-        result = mapX(x, "set");
+    if ($("#btnFilterPermission").length) {
+        $('#btnFilterPermission').click(function (e) {
+            result = filterPermissions(x, "owner");
+            document.getElementById("task").innerHTML = JSON.stringify(result, null, 4);
 
-        // print the mapResult object
-        document.getElementById("task").innerHTML = "";
-        for (var prop in result) {
-            document.getElementById("task").innerHTML = document.getElementById("task").innerHTML + '"' + prop + '":' + JSON.stringify(result[prop], null, 4) + "<br>";
-        }
-    });
+
+        });
+    }
+
+    if ($("#btnMap").length) {
+        $('#btnMap').click(function (e) {
+            result = mapX(x, "set");
+
+            // print the mapResult object
+            document.getElementById("task").innerHTML = "";
+            for (var prop in result) {
+                document.getElementById("task").innerHTML = document.getElementById("task").innerHTML + '"' + prop + '":' + JSON.stringify(result[prop], null, 4) + "<br>";
+            }
+        });
+    }
 });
 
 
@@ -174,3 +189,5 @@ function getExistingSetsFromObjects(struct, getProp) {
     }
     return _.uniq(arr);
 }
+
+
