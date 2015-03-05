@@ -2,9 +2,11 @@
 //*************************************************************
 // CkEditor task Part
 //*************************************************************
+var timerId = 0;
+
 $(document).ready(function () {
 
-    var timerId = 0;
+    
 
     $('#btnSelectAll').click(function (e) {
         SelectAll();
