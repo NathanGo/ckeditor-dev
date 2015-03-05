@@ -1,4 +1,7 @@
 
+
+
+
 //*************************************************************
 // CkEditor task part
 //*************************************************************
@@ -107,7 +110,7 @@ var x = {
 };
 
 $(document).ready(function () {
-
+    
     if ($("#btnFilterPermission").length) {
         $('#btnFilterPermission').click(function (e) {
             result = filterPermissions(x, "owner");
@@ -146,48 +149,26 @@ function filterPermissions(structToManipulation, perm) {
 
 
 
-// function that  map x values by set 
+// function that  map/group x values by set 
 function mapX(structToMap, mapBy) {
-    var newObject = new Object;
-    //get from original objects existing sets
-    var setsArray = getExistingSetsFromObjects(structToMap, mapBy);
+    var returnSets = {};
 
-    //this block going through all the objects and group the objects by set
-    for (var item in setsArray) {
-        var tempArray = new Array();
-        for (var key in structToMap) {
-            var obj = structToMap[key];
-            for (var prop in obj) {
-                if (prop === mapBy) {
-                    for (var s in obj[prop]) {
-                        //check if set exist in original object and push to new array
-                        if (obj[prop][s] === setsArray[item]) {
-                            tempArray.push(obj);
-                        }
-                    }
-                }
-            }
-        }
-        // set new array to new "set" object
-        newObject[setsArray[item]] = tempArray;
-    }
-    return newObject;
-}
+    for (var setIndex in structToMap) {
+        var setObject = structToMap[setIndex];
+        for (var i = 0; i < setObject[mapBy].length; i++) {
+            var setName = setObject[mapBy][i];
 
-// get uniq array of existing set
-function getExistingSetsFromObjects(struct, getProp) {
-    var arr = new Array();
-    for (var key in struct) {
-        var obj = struct[key];
-        for (var prop in obj) {
-            if (prop === getProp) {
-                for (var s in obj[prop]) {
-                    arr.push(obj[prop][s]);
-                }
+            if (typeof (returnSets[setName]) == "undefined") {
+                returnSets[setName] = [];
             }
+            returnSets[setName].push(setObject);
         }
     }
-    return _.uniq(arr);
+    return returnSets;
 }
+
+
+
+
 
 
