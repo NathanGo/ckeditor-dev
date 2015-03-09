@@ -30,7 +30,7 @@ $(document).ready(function () {
 
         });
     }
-    
+
 });
 
 //retrieve html from ckeditor, remove img tag and load to myDiv
@@ -38,7 +38,8 @@ function LoadCkEditorDataToDiv() {
     var editor = CKEDITOR.instances["editor1"];
     var htmldata = editor.document.getBody().getHtml();
     var newHtmlData = RemoveImgElementFromHtml(htmldata);
-    $('#CkEditorData').html(newHtmlData);
+    document.getElementById("CkEditorData").innerHTML = newHtmlData;
+    //$('#CkEditorData').html(newHtmlData);
 
 
 
@@ -46,7 +47,8 @@ function LoadCkEditorDataToDiv() {
 
 //Remove img 
 function RemoveImgElementFromHtml(htmlData) {
-    htmlData = $(htmlData).find("img").remove().end();
+    //htmlData = $(htmlData).find("img").remove().end();
+    htmlData = htmlData.replace(/<img[^>]*>/g, "");
     return htmlData;
 }
 
@@ -110,11 +112,14 @@ var x = {
 };
 
 $(document).ready(function () {
-    
+
     if ($("#btnFilterPermission").length) {
         $('#btnFilterPermission').click(function (e) {
-            result = filterPermissions(x, "owner");
-            document.getElementById("task").innerHTML = JSON.stringify(result, null, 4);
+            result = filterPermissions(x, "all");
+            //result = filterPermissions(x, "owner");
+            for (var prop in result) {
+                document.getElementById("task").innerHTML = document.getElementById("task").innerHTML +'"' + prop + '":' + JSON.stringify(result[prop], null, 4) + "<br>";
+            }
 
 
         });
@@ -135,16 +140,19 @@ $(document).ready(function () {
 
 
 
-//Function filter data structure by permission parameter and return the found object
+//Function filter data structure by permission parameter and return the found objects
 function filterPermissions(structToManipulation, perm) {
-    var result = _.findKey(structToManipulation, function (chr) {
+    var returnSets = {};
+    var result = _.mapValues(structToManipulation, function (chr) {
         return chr.permission == perm;
     });
-    var newObject = new Object();
-    var d = result.toString();
-    newObject[result] = structToManipulation[result];
-    return newObject;
-
+    for (var index in structToManipulation) {
+        var object = result[index];
+        if (object) {
+            returnSets[index] = structToManipulation[index];
+        }
+    }
+    return returnSets;
 };
 
 
