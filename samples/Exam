@@ -1,0 +1,82 @@
+This is a basic data structure manipulation Exam for WIX
+
+Prerequisites
+•	Good JavaScript
+Relevant links
+•	lodash home page: https://lodash.com/ 
+Tasks
+All of the tasks are manipulations over this given data structure:
+var x = {
+"a":{
+"name":"a",
+"set":["set1","set2"],
+"permission":"all"
+},
+"b":{
+"name":"b",
+"set":["set2"],
+"permission":"all"
+},
+"c":{
+"name":"c",
+"set":["set2","set3"],
+"permission":"owner"
+}
+};
+You can choose to use lodash library in the solution, it is not must.
+1.	Filter – Write a function that will filter x by permission, example:
+filterX(x, 'owner')  will return the object:  
+{
+   "c":{
+       "name":"c",
+       "set":["set2","set3"],
+       "permission":"owner"
+   }
+};
+2.	Map – Write a function that will map x values by set, example:
+mapX(x)  will return the object:  
+{
+ "set1":[
+     {"name":"a", "set":["set1","set2"], "permission":"all"}
+ ],
+ "set2":[
+     {"name":"a", "set":["set1","set2"], "permission":"all"},
+     {"name":"b","set":["set2"],"permission":"all"},
+     {"name":"c","set":["set2","set3"],"permission":"owner"}
+ ],
+ "set3":[
+     {"name":"c","set":["set2","set3"],"permission":"owner"}
+]}
+
+When Finished solving the tasks please send the GitHub repository and branch name for review.
+
+
+This is a CKEditor Exam for WIX	
+
+Prerequisites
+•	Good JavaScript
+•	Basic GIT
+•	Basic GitHub
+
+Relevant links
+•	CKEditor home page: http://ckeditor.com/
+•	CKEditor GitHub dev page: https://github.com/ckeditor/ckeditor-dev
+ 
+Preparations
+1.	Fork the dev branch of CKEditor from GitHub to your GitHub account.
+2.	Create a new branch for the assignment (name it whatever you want)
+Tasks
+
+Start by Opening the "replacebyclass" sample under: samples/replacebyclass.html. All code should extend this sample. 
+1.	Selection
+1.	"Select All" Button – Add new button to the page, labeled "Select All". Clicking the button will select the all text inside CK-Editor.
+2.	"Select Second Paragraph" Button - Add new button to the page, labeled "Select Second Paragraph". Clicking the button will select only the second paragraph inside CK-Editor.
+2.	Display as HTML Without images – 
+1.	Add a div element to the page that will display the CK-Editor data as HTML without images. 
+2.	The div content should be updated every time the user change something in the CK-Editor
+3.	Delay - Update the content of the div from task 2 only after the user have finished typing. "Finishing typing" means that no change occurred for at least 500 milliseconds.
+
+
+
+
+When Finished solving the tasks please send the GitHub repository and branch name for review.
